@@ -5,6 +5,9 @@ Please choose your preferred language:
 - [Documentation in English](README.md)
 - [Документация на Русском языке](README.ru.md)
 
+<img src="/Resources/codePreview.png" alt="Logotype" width="20%">
+
+
 **Coding Time Tracker for Steam** is a convenient tool for developers that automatically tracks the time spent programming in popular IDEs such as **Visual Studio Code**, **JetBrains**, **Sublime Text**, and many others.  
 The tracked time is displayed on your Steam profile for the game **Kode Studio**.
 
