@@ -5,7 +5,6 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace CodingTimeTrackerForSteam
@@ -13,10 +12,9 @@ namespace CodingTimeTrackerForSteam
     internal static class Program
     {
         private static NotifyIcon _trayIcon;
-        private static Process _gameProcess;
+        private static Process _steamProcess;
         private static System.Threading.Timer _editorCheckTimer;
-        private static int _errorCount = 0;
-        private static bool _isReady = false;
+        private static Process _gameProcess;
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
@@ -33,6 +31,7 @@ namespace CodingTimeTrackerForSteam
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
+        private static bool _isReady = false;
 
         private delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
 
@@ -120,7 +119,7 @@ namespace CodingTimeTrackerForSteam
 
                 var contextMenu = new ContextMenuStrip();
                 string userLanguage = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
-
+                
                 if (!_localize.ContainsKey(userLanguage))
                 {
                     userLanguage = "en";
@@ -129,8 +128,14 @@ namespace CodingTimeTrackerForSteam
                 contextMenu.Items.Add(_localize[userLanguage][0], null, OnGitHubMenuItemClick);
                 contextMenu.Items.Add(_localize[userLanguage][1], null, OnDeveloperPageMenuItemClick);
                 contextMenu.Items.Add(_localize[userLanguage][2], null, OnExitMenuItemClick);
-
                 _trayIcon.ContextMenuStrip = contextMenu;
+
+                if (!IsSteamRunning())
+                {
+                    StartSteam();
+                    Thread.Sleep(30000); // Подождать 10 секунд для загрузки Steam
+                }
+
                 _gameProcess = Process.Start(new ProcessStartInfo("steam://rungameid/779260") { UseShellExecute = true });
                 CheckProgram();
                 _editorCheckTimer = new System.Threading.Timer(CheckEditorsAndManageGame, null, 0, 1000);
@@ -138,8 +143,29 @@ namespace CodingTimeTrackerForSteam
             }
         }
 
-        private static bool IsAnyCodeEditorRunning() =>
-            Process.GetProcesses().Any(p => CodeEditors.Contains(p.ProcessName, StringComparer.OrdinalIgnoreCase));
+        private static bool IsSteamRunning()
+        {
+            return Process.GetProcessesByName("steam").Any();
+        }
+
+        private static void StartSteam()
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo("steam://") { UseShellExecute = true });
+                Console.WriteLine("Steam запущен.");
+                Thread.Sleep(10000); // Подождать 10 секунд для загрузки Steam
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Не удалось запустить Steam: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private static bool IsAnyCodeEditorRunning()
+        {
+            return Process.GetProcesses().Any(p => CodeEditors.Contains(p.ProcessName.ToLower()));
+        }
 
         private static void CheckProgram()
         {
@@ -174,7 +200,8 @@ namespace CodingTimeTrackerForSteam
 
         private static void HideGameWindow()
         {
-            const string targetWindowTitle = "Kode Studio";
+            const string TargetWindowTitle = "Kode Studio";
+
             EnumWindows((hWnd, lParam) =>
             {
                 int length = GetWindowTextLength(hWnd);
@@ -183,11 +210,38 @@ namespace CodingTimeTrackerForSteam
                     var windowTitle = new StringBuilder(length + 1);
                     GetWindowText(hWnd, windowTitle, windowTitle.Capacity);
 
-                    if (windowTitle.ToString().Equals(targetWindowTitle, StringComparison.OrdinalIgnoreCase))
+                    if (windowTitle.ToString().Equals(TargetWindowTitle, StringComparison.OrdinalIgnoreCase))
                     {
                         ShowWindow(hWnd, SwHide);
                         Console.WriteLine($"Game window \"{windowTitle}\" is hidden.");
+                        
+                        if(!_isReady)
+                        {
+                            Process.Start(new ProcessStartInfo("taskkill", "/F /IM \"Kode Studio.exe\"") { UseShellExecute = true });
+                        }
                         _isReady = true;
+                    }
+                }
+                return true;
+            }, IntPtr.Zero);
+        }
+
+        private static void CloseGameWindow()
+        {
+            const string TargetWindowTitle = "Kode Studio";
+
+            EnumWindows((hWnd, lParam) =>
+            {
+                int length = GetWindowTextLength(hWnd);
+                if (length > 0)
+                {
+                    var windowTitle = new StringBuilder(length + 1);
+                    GetWindowText(hWnd, windowTitle, windowTitle.Capacity);
+
+                    if (windowTitle.ToString().Equals(TargetWindowTitle, StringComparison.OrdinalIgnoreCase))
+                    {
+                        Process.Start(new ProcessStartInfo("taskkill", "/F /IM \"Kode Studio.exe\"") { UseShellExecute = false});
+                        Console.WriteLine($"Game  \"{windowTitle}\" is closed.");
                     }
                 }
                 return true;
@@ -211,19 +265,27 @@ namespace CodingTimeTrackerForSteam
                                 Console.WriteLine("Game launched.");
                             }
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
+                            Console.WriteLine($"Error starting the game: {ex.Message}");
                         }
                     }
+                }
+                else
+                {
+                    CloseGameWindow();
+                    //Process.Start(new ProcessStartInfo("taskkill", "/F /IM \"Kode Studio.exe\"") { UseShellExecute = false});
+                    Console.WriteLine("Code Editor and game closed.");
                 }
             }
             else if (_gameProcess != null)
             {
                 try
                 {
-                    Process.Start(new ProcessStartInfo("taskkill", "/F /IM \"Kode Studio.exe\"") { UseShellExecute = true });
+                    //Process.Start(new ProcessStartInfo("taskkill", "/F /IM \"Kode Studio.exe\"") { UseShellExecute = true });
                     Console.WriteLine("Game closed.");
-                    _gameProcess = null;
+                    //_gameProcess.Kill();
+                    //_gameProcess = null;
                 }
                 catch (Exception ex)
                 {
@@ -232,19 +294,26 @@ namespace CodingTimeTrackerForSteam
             }
         }
 
-        private static bool IsGameRunning() =>
-            Process.GetProcesses().Any(p => p.ProcessName.Equals("Kode Studio", StringComparison.OrdinalIgnoreCase));
+        private static bool IsGameRunning()
+        {
+            return Process.GetProcesses().Any(p => p.ProcessName.Equals("Kode Studio", StringComparison.OrdinalIgnoreCase));
+        }
 
-        private static void OnGitHubMenuItemClick(object sender, EventArgs e) =>
+        private static void OnGitHubMenuItemClick(object sender, EventArgs e)
+        {
             Process.Start(new ProcessStartInfo("https://github.com/Chelovedus/Coding-Time-Tracker-For-Steam") { UseShellExecute = true });
+        }
 
-        private static void OnDeveloperPageMenuItemClick(object sender, EventArgs e) =>
+        private static void OnDeveloperPageMenuItemClick(object sender, EventArgs e)
+        {
             Process.Start(new ProcessStartInfo("https://steamcommunity.com/id/superfrost/") { UseShellExecute = true });
+        }
 
         private static void OnExitMenuItemClick(object sender, EventArgs e)
         {
             _trayIcon.Visible = false;
             Process.Start(new ProcessStartInfo("taskkill", "/F /IM \"Kode Studio.exe\"") { UseShellExecute = true });
+            _gameProcess = null;
             Application.Exit();
         }
     }
