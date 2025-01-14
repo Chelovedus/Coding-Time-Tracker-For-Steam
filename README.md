@@ -1,6 +1,6 @@
 # Coding Time Tracker for Steam 🕒🎮
 
-Please choose your preferred language:
+**Please choose your preferred language (Пожалуйста, выберите предпочитаемый язык):**
 
 - [Documentation in English](README.md)
 - [Документация на Русском языке](README.ru.md)
