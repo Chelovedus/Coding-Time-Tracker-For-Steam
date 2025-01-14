@@ -35,12 +35,12 @@ The tracked time is displayed on your Steam profile for the game **Kode Studio**
 ## 🚀 Installation and Launch
 
 1. Ensure that **Kode Studio** is installed via Steam.
-2. Download and launch **Coding Time Tracker for Steam**. [Download link]
+2. Download and launch **Coding Time Tracker for Steam**. [[Download link]](https://github.com/Chelovedus/Coding-Time-Tracker-For-Steam/releases/download/Release/CodingTimeTrackerForSteam_Installer.exe)
 3. Open your IDE and start coding — the program will take care of the rest!
 
 ## 🧑‍💻 Building the Project Yourself
 
-1. Download the project files from the [GitHub repository](https://github.com/).
+1. Download the project files from the [GitHub repository]([https://github.com/](https://github.com/Chelovedus/Coding-Time-Tracker-For-Steam/archive/refs/tags/Release.zip)).
 2. Open your IDE (e.g., **Visual Studio** or **Rider**) and select the downloaded project folder.
 3. Open the terminal or integrated console in your IDE.
 4. Run the following command to build the project:
@@ -53,8 +53,8 @@ The tracked time is displayed on your Steam profile for the game **Kode Studio**
 
 ## 📬 Contact the Developer
 
-- **[GitHub](https://github.com/)**: Source code and project details.
-- **[Developer's Steam page](#)**: Latest updates and projects.
+- **[Developer's GitHub page](https://github.com/Chelovedus)**: Source code and project details.
+- **[Developer's Steam page](https://steamcommunity.com/id/superfrost/)**: Latest updates and projects.
 
 ---
 
