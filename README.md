@@ -4,7 +4,6 @@
 <img src="/Resources/codePreview.png" alt="Logotype" width="10%">
 </div>
 
-
 **Please choose your preferred language (Пожалуйста, выберите предпочитаемый язык):**
 
 - [Documentation in English](README.md)
