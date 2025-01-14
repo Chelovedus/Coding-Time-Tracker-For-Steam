@@ -1,6 +1,10 @@
 # Coding Time Tracker for Steam 🕒🎮
 
-Пожалуйста, выберите предпочитаемый язык:
+<p align="center">
+<img src="/Resources/codePreview.png" alt="Logotype" width="10%">
+</div>
+
+**Пожалуйста, выберите предпочитаемый язык (Please choose your preferred language):**
 
 - [Documentation in English language](README.md)
 - [Документация на Русском языке](README.ru.md)
