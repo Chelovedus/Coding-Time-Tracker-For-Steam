@@ -55,8 +55,8 @@ The tracked time is displayed on your Steam profile for the game **Kode Studio**
 
 ## 📬 Contact the Developer
 
-- **[Developer's GitHub page](https://github.com/Chelovedus)**: Source code and project details.
-- **[Developer's Steam page](https://steamcommunity.com/id/superfrost/)**: Latest updates and projects.
+- **[Developer's GitHub page](https://github.com/Chelovedus)**
+- **[Developer's Steam page](https://steamcommunity.com/id/superfrost/)**
 
 ---
 
