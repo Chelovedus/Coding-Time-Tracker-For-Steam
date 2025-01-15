@@ -18,7 +18,7 @@
 
 
 
-<img src="/Resources/Preview.gif" alt="Logotype" width="50%">
+<img src="/Resources/Preview.gif" alt="Logotype" width="100%">
 
 ## ✨ Особенности
 
