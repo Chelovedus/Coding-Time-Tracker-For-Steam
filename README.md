@@ -31,17 +31,17 @@
 3. The time spent programming is displayed on your Steam profile.
 4. If the user closes the IDE or code editor, **Kode Studio** automatically shuts down, and the program returns to standby mode.
 
-## 🛠️ Technical Details
-
-- **Written in**: C#
-- **Requirements**: .NET is **not required** as it is embedded within the application.
-- **Autostart support**: The program starts automatically when the system boots.
-
 ## 🚀 Installation and Launch
 
 1. Ensure that [**Kode Studio**](https://store.steampowered.com/app/779260/) is installed via Steam.
 2. Download and launch **Coding Time Tracker for Steam**. [[Download link]](https://github.com/Chelovedus/Coding-Time-Tracker-For-Steam/releases/download/Release/CodingTimeTrackerForSteam_Installer.exe)
 3. Open your IDE and start coding — the program will take care of the rest!
+
+## 🛠️ Technical Details
+
+- **Written in**: C#
+- **Requirements**: .NET is **not required** as it is embedded within the application.
+- **Autostart support**: The program starts automatically when the system boots.
 
 ## 🧑‍💻 Building the Project Yourself
 
