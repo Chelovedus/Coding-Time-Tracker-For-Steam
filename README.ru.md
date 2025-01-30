@@ -58,7 +58,7 @@
 
 ## 📬 Связь с разработчиком
 
-- **[Страница разработчика на GitHub](https://github.com/Chelovedus/Coding-Time-Tracker-For-Steam/archive/refs/tags/Release.zip)**
+- **[Страница разработчика на GitHub](https://github.com/Chelovedus)**
 - **[Страница разработчика в Steam](https://steamcommunity.com/id/superfrost/)**
 ---
 
