@@ -133,8 +133,9 @@ namespace CodingTimeTrackerForSteam
                 if (!IsSteamRunning())
                 {
                     StartSteam();
-                    Thread.Sleep(30000); // Подождать 10 секунд для загрузки Steam
                 }
+
+                WaitForSteamReady(120000);
 
                 _gameProcess = Process.Start(new ProcessStartInfo("steam://rungameid/779260") { UseShellExecute = true });
                 CheckProgram();
@@ -143,24 +144,22 @@ namespace CodingTimeTrackerForSteam
             }
         }
 
+        private static bool IsSteamWebHelperRunning()
+        {
+            return Process.GetProcessesByName("steamwebhelper").Any();
+        }
+
+        private static bool IsSteamFullyReady()
+        {
+            return IsSteamRunning() && IsSteamWebHelperRunning();
+        }
+
+
         private static bool IsSteamRunning()
         {
             return Process.GetProcessesByName("steam").Any();
         }
 
-        private static void StartSteam()
-        {
-            try
-            {
-                Process.Start(new ProcessStartInfo("steam://") { UseShellExecute = true });
-                Console.WriteLine("Steam запущен.");
-                Thread.Sleep(10000); // Подождать 10 секунд для загрузки Steam
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Не удалось запустить Steam: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
         private static bool IsAnyCodeEditorRunning()
         {
@@ -173,6 +172,36 @@ namespace CodingTimeTrackerForSteam
             timer.Elapsed += OnTimedEvent;
             timer.AutoReset = false;
             timer.Enabled = true;
+        }
+
+        private static void StartSteam()
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo("steam://") { UseShellExecute = true });
+                Console.WriteLine("Steam запущен.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Не удалось запустить Steam: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private static void WaitForSteamReady(int timeoutMilliseconds)
+        {
+            var stopwatch = Stopwatch.StartNew();
+
+            while (stopwatch.ElapsedMilliseconds < timeoutMilliseconds)
+            {
+                if (IsSteamFullyReady())
+                {
+                    return;
+                }
+
+                Thread.Sleep(500);
+            }
+
+            throw new TimeoutException("Steam did not become ready in time.");
         }
 
         private static void OnTimedEvent(object source, System.Timers.ElapsedEventArgs e)
