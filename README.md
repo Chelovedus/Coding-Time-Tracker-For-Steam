@@ -34,7 +34,7 @@
 ## 🚀 Installation and Launch
 
 1. Ensure that [**Kode Studio**](https://store.steampowered.com/app/779260/) is installed via Steam.
-2. Download and launch **Coding Time Tracker for Steam**. [[Download link]](https://github.com/Chelovedus/Coding-Time-Tracker-For-Steam/releases/download/v.1.2.0/CodingTimeTrackerForSteam_Installer.exe)
+2. Download and launch **Coding Time Tracker for Steam**. [[Download link]](https://github.com/Chelovedus/Coding-Time-Tracker-For-Steam/releases/download/v.1.3.0/CodingTimeTrackerForSteam_Installer.exe)
 3. Open your IDE and start coding — the program will take care of the rest!
 
 ## 🛠️ Technical Details
