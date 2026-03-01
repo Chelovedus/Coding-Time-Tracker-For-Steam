@@ -135,10 +135,19 @@ namespace CodingTimeTrackerForSteam
                     StartSteam();
                 }
 
-                WaitForSteamReady(120000);
+                try
+                {
+                    WaitForSteamReady(180000);
+                }
+                catch (TimeoutException)
+                {
+                    Console.WriteLine("Steam initialization timeout, continuing anyway...");
+                }
 
                 _gameProcess = Process.Start(new ProcessStartInfo("steam://rungameid/779260") { UseShellExecute = true });
-                CheckProgram();
+                
+                WaitForGameLaunch(300000);
+                
                 _editorCheckTimer = new System.Threading.Timer(CheckEditorsAndManageGame, null, 0, 1000);
                 Application.Run();
             }
@@ -166,12 +175,61 @@ namespace CodingTimeTrackerForSteam
             return Process.GetProcesses().Any(p => CodeEditors.Contains(p.ProcessName.ToLower()));
         }
 
-        private static void CheckProgram()
+        private static void WaitForGameLaunch(int timeoutMilliseconds)
         {
-            var timer = new System.Timers.Timer(7000);
-            timer.Elapsed += OnTimedEvent;
-            timer.AutoReset = false;
-            timer.Enabled = true;
+            var stopwatch = Stopwatch.StartNew();
+            int checkCount = 0;
+            long lastAttempt = 0;
+            const int attemptInterval = 60000;
+
+            while (stopwatch.ElapsedMilliseconds < timeoutMilliseconds)
+            {
+                if (IsGameRunning())
+                {
+                    _isReady = true;
+                    Console.WriteLine("Kode Studio launched successfully.");
+                    return;
+                }
+
+                if (stopwatch.ElapsedMilliseconds - lastAttempt >= attemptInterval)
+                {
+                    try
+                    {
+                        Console.WriteLine("Attempting to start Kode Studio via Steam URI...");
+                        _gameProcess = Process.Start(new ProcessStartInfo("steam://rungameid/779260") { UseShellExecute = true });
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Failed to start game on attempt: {ex.Message}");
+                    }
+                    lastAttempt = stopwatch.ElapsedMilliseconds;
+                }
+
+                checkCount++;
+                Thread.Sleep(500);
+                
+                if (checkCount % 10 == 0)
+                {
+                    Console.WriteLine($"Waiting for Kode Studio... ({stopwatch.ElapsedMilliseconds / 1000}s)");
+                }
+            }
+
+            string[] supportedLanguages = { "en", "ru", "es", "de", "fr", "it", "pt", "ko", "zh-Hans", "zh-Hant", 
+                                            "ja", "nl", "sv", "da", "no", "fi", "tr", "ar", "cs", "hu" };
+
+            var cultureInfo = Thread.CurrentThread.CurrentCulture;
+            string languageCode = cultureInfo.TwoLetterISOLanguageName;
+            int index = Array.IndexOf(supportedLanguages, languageCode);
+
+            if (index == -1)
+            {
+                index = 0;
+            }
+
+            var (message, title) = _localizations[index];
+            MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            Process.Start(new ProcessStartInfo("https://store.steampowered.com/app/779260") { UseShellExecute = true });
+            Application.Exit();
         }
 
         private static void StartSteam()
@@ -179,52 +237,38 @@ namespace CodingTimeTrackerForSteam
             try
             {
                 Process.Start(new ProcessStartInfo("steam://") { UseShellExecute = true });
-                Console.WriteLine("Steam запущен.");
+                Console.WriteLine("Steam launched. Waiting for initialization...");
+                Thread.Sleep(5000);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Не удалось запустить Steam: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Failed to start Steam: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private static void WaitForSteamReady(int timeoutMilliseconds)
         {
             var stopwatch = Stopwatch.StartNew();
+            int checkCount = 0;
 
             while (stopwatch.ElapsedMilliseconds < timeoutMilliseconds)
             {
                 if (IsSteamFullyReady())
                 {
+                    Console.WriteLine("Steam is ready.");
                     return;
                 }
 
-                Thread.Sleep(500);
-            }
-
-            throw new TimeoutException("Steam did not become ready in time.");
-        }
-
-        private static void OnTimedEvent(object source, System.Timers.ElapsedEventArgs e)
-        {
-            if (!_isReady)
-            {
-                string[] supportedLanguages = { "en", "ru", "es", "de", "fr", "it", "pt", "ko", "zh-Hans", "zh-Hant", 
-                                                "ja", "nl", "sv", "da", "no", "fi", "tr", "ar", "cs", "hu" };
-
-                var cultureInfo = Thread.CurrentThread.CurrentCulture;
-                string languageCode = cultureInfo.TwoLetterISOLanguageName;
-                int index = Array.IndexOf(supportedLanguages, languageCode);
-
-                if (index == -1)
+                checkCount++;
+                Thread.Sleep(1000);
+                
+                if (checkCount % 10 == 0)
                 {
-                    index = 0;
+                    Console.WriteLine($"Waiting for Steam to be ready... ({stopwatch.ElapsedMilliseconds / 1000}s)");
                 }
-
-                var (message, title) = _localizations[index];
-                MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                Process.Start(new ProcessStartInfo("https://store.steampowered.com/app/779260") { UseShellExecute = true });
-                Application.Exit();
             }
+
+            Console.WriteLine("Steam ready timeout reached, but continuing...");
         }
 
         private static void HideGameWindow()
@@ -243,11 +287,6 @@ namespace CodingTimeTrackerForSteam
                     {
                         ShowWindow(hWnd, SwHide);
                         Console.WriteLine($"Game window \"{windowTitle}\" is hidden.");
-                        
-                        if(!_isReady)
-                        {
-                            Process.Start(new ProcessStartInfo("taskkill", "/F /IM \"Kode Studio.exe\"") { UseShellExecute = true });
-                        }
                         _isReady = true;
                     }
                 }
@@ -303,7 +342,6 @@ namespace CodingTimeTrackerForSteam
                 else
                 {
                     CloseGameWindow();
-                    //Process.Start(new ProcessStartInfo("taskkill", "/F /IM \"Kode Studio.exe\"") { UseShellExecute = false});
                     Console.WriteLine("Code Editor and game closed.");
                 }
             }
@@ -311,10 +349,7 @@ namespace CodingTimeTrackerForSteam
             {
                 try
                 {
-                    //Process.Start(new ProcessStartInfo("taskkill", "/F /IM \"Kode Studio.exe\"") { UseShellExecute = true });
                     Console.WriteLine("Game closed.");
-                    //_gameProcess.Kill();
-                    //_gameProcess = null;
                 }
                 catch (Exception ex)
                 {
