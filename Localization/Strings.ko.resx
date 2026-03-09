@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="InstallMessage" xml:space="preserve">
+    <value>게임 스토어에서 Kode Studio를 설치해야 합니다.</value>
+  </data>
+  <data name="InstallTitle" xml:space="preserve">
+    <value>Kode Studio를 설치하십시오.</value>
+  </data>
+  <data name="MenuItem_GitHub" xml:space="preserve">
+    <value>깃허브</value>
+  </data>
+  <data name="MenuItem_Developer" xml:space="preserve">
+    <value>개발자 페이지</value>
+  </data>
+  <data name="MenuItem_Exit" xml:space="preserve">
+    <value>종료</value>
+  </data>
+  <data name="AlreadyRunningTitle" xml:space="preserve">
+    <value>이미 실행 중</value>
+  </data>
+  <data name="AlreadyRunningMessage" xml:space="preserve">
+    <value>Coding Time Tracker가 이미 실행 중입니다.</value>
+  </data>
+  <data name="MenuItem_Language" xml:space="preserve">
+    <value>언어</value>
+  </data>
+  <data name="MenuItem_SystemDefault" xml:space="preserve">
+    <value>시스템 기본값</value>
+  </data>
+</root>

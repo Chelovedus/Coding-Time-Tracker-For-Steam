@@ -31,20 +31,18 @@ ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
-InfoBeforeFile=C:\Users\dkflb\Downloads\before.txt
-InfoAfterFile=C:\Users\dkflb\Downloads\after.txt
-; Uncomment the following line to run in non administrative install mode (install for current user only).
+; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=commandline
-OutputDir=C:\Users\dkflb\Downloads\outputApp
+OutputDir={#SourcePath}\..\installer
 OutputBaseFilename=CodingTimeTrackerForSteam_Installer
-SetupIconFile=C:\Users\dkflb\Downloads\Coding-Time-Tracker-For-Steam_GIT\Resources\vscode.ico
+SetupIconFile={#SourcePath}\vscode.ico
 SolidCompression=yes
 WizardStyle=modern dark windows11
 
 [Languages]
-Name: "english"; MessagesFile: "compiler:Default.isl"
-Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
+Name: "english";   MessagesFile: "compiler:Default.isl"
+Name: "russian";   MessagesFile: "compiler:Languages\Russian.isl"
 Name: "ukrainian"; MessagesFile: "compiler:Languages\Ukrainian.isl"
 
 [Tasks]
@@ -52,12 +50,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "autostart"; Description: "Add {#MyAppName} to Windows startup"; GroupDescription: "Additional options"
 
 [Files]
-Source: "C:\Users\dkflb\Downloads\del\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\dkflb\Downloads\del\D3DCompiler_47_cor3.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\dkflb\Downloads\del\PenImc_cor3.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\dkflb\Downloads\del\PresentationNative_cor3.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\dkflb\Downloads\del\vcruntime140_cor3.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\dkflb\Downloads\del\wpfgfx_cor3.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourcePath}\..\bin\Release\net8.0-windows\win-x64\publish\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

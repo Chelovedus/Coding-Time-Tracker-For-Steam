@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="InstallMessage" xml:space="preserve">
+    <value>Kode StudioはSteamストアからインストールする必要があります。</value>
+  </data>
+  <data name="InstallTitle" xml:space="preserve">
+    <value>Kode Studioをインストールしてください。</value>
+  </data>
+  <data name="MenuItem_GitHub" xml:space="preserve">
+    <value>GitHub</value>
+  </data>
+  <data name="MenuItem_Developer" xml:space="preserve">
+    <value>開発者ページ</value>
+  </data>
+  <data name="MenuItem_Exit" xml:space="preserve">
+    <value>終了</value>
+  </data>
+  <data name="AlreadyRunningTitle" xml:space="preserve">
+    <value>既に実行中</value>
+  </data>
+  <data name="AlreadyRunningMessage" xml:space="preserve">
+    <value>Coding Time Tracker は既に実行中です。</value>
+  </data>
+  <data name="MenuItem_Language" xml:space="preserve">
+    <value>言語</value>
+  </data>
+  <data name="MenuItem_SystemDefault" xml:space="preserve">
+    <value>システムデフォルト</value>
+  </data>
+</root>

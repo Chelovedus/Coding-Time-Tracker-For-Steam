@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="InstallMessage" xml:space="preserve">
+    <value>您需要從 Steam 商店安裝 Kode Studio。</value>
+  </data>
+  <data name="InstallTitle" xml:space="preserve">
+    <value>請安裝 Kode Studio。</value>
+  </data>
+  <data name="MenuItem_GitHub" xml:space="preserve">
+    <value>GitHub</value>
+  </data>
+  <data name="MenuItem_Developer" xml:space="preserve">
+    <value>開發者頁面</value>
+  </data>
+  <data name="MenuItem_Exit" xml:space="preserve">
+    <value>退出</value>
+  </data>
+  <data name="AlreadyRunningTitle" xml:space="preserve">
+    <value>已在運行</value>
+  </data>
+  <data name="AlreadyRunningMessage" xml:space="preserve">
+    <value>Coding Time Tracker 已在運行。</value>
+  </data>
+  <data name="MenuItem_Language" xml:space="preserve">
+    <value>語言</value>
+  </data>
+  <data name="MenuItem_SystemDefault" xml:space="preserve">
+    <value>系統預設</value>
+  </data>
+</root>

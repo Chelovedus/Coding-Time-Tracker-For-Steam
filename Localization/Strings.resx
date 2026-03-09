@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="InstallMessage" xml:space="preserve">
+    <value>You need to install Kode Studio from the Steam Store.</value>
+  </data>
+  <data name="InstallTitle" xml:space="preserve">
+    <value>Please install Kode Studio.</value>
+  </data>
+  <data name="MenuItem_GitHub" xml:space="preserve">
+    <value>GitHub</value>
+  </data>
+  <data name="MenuItem_Developer" xml:space="preserve">
+    <value>Developer Page</value>
+  </data>
+  <data name="MenuItem_Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="AlreadyRunningTitle" xml:space="preserve">
+    <value>Already Running</value>
+  </data>
+  <data name="AlreadyRunningMessage" xml:space="preserve">
+    <value>Coding Time Tracker is already running.</value>
+  </data>
+  <data name="MenuItem_Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="MenuItem_SystemDefault" xml:space="preserve">
+    <value>System Default</value>
+  </data>
+</root>

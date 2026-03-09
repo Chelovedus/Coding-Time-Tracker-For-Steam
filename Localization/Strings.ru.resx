@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="InstallMessage" xml:space="preserve">
+    <value>Вам необходимо установить Kode Studio из магазина Steam.</value>
+  </data>
+  <data name="InstallTitle" xml:space="preserve">
+    <value>Пожалуйста, установите Kode Studio.</value>
+  </data>
+  <data name="MenuItem_GitHub" xml:space="preserve">
+    <value>GitHub</value>
+  </data>
+  <data name="MenuItem_Developer" xml:space="preserve">
+    <value>Страница разработчика</value>
+  </data>
+  <data name="MenuItem_Exit" xml:space="preserve">
+    <value>Выход</value>
+  </data>
+  <data name="AlreadyRunningTitle" xml:space="preserve">
+    <value>Уже запущено</value>
+  </data>
+  <data name="AlreadyRunningMessage" xml:space="preserve">
+    <value>Coding Time Tracker уже запущен.</value>
+  </data>
+  <data name="MenuItem_Language" xml:space="preserve">
+    <value>Язык</value>
+  </data>
+  <data name="MenuItem_SystemDefault" xml:space="preserve">
+    <value>Системный по умолчанию</value>
+  </data>
+</root>
