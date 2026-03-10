@@ -88,9 +88,11 @@ namespace CodingTimeTrackerForSteam.Linux
 
             string[] possibleRoots =
             {
-                Path.Combine(home, ".var/app/com.valvesoftware.Steam/.local/share/Steam"), // Flatpak
+                Path.Combine(home, ".var/app/com.valvesoftware.Steam/.local/share/Steam"),  // Flatpak
                 Path.Combine(home, ".local/share/Steam"),                                   // Native
-                Path.Combine(home, ".steam/steam")                                          // Old
+                Path.Combine(home, ".steam/steam"),                                         // Old
+                Path.Combine(home, "Steam"),                                                // Custom ~/Steam
+                Path.Combine(home, "snap/steam/current/.local/share/Steam")                 // Snap
             };
 
             foreach (var root in possibleRoots)
