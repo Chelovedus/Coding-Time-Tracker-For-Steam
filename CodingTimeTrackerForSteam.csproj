@@ -22,15 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Localization\Strings.resx">
-      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <Compile Update="Localization\Strings.Designer.cs">
-      <DependentUpon>Strings.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="System.Management" Version="9.0.0" />
   </ItemGroup>
 </Project>
