@@ -15,7 +15,7 @@ namespace CodingTimeTrackerForSteam.Linux
         private const string SteamWebHelperProcessName = "steamwebhelper";
 
         private const int EditorCheckIntervalMs = 1000;
-        private const int WaitForSteamTimeoutMs = 180000;
+        private const int WaitForSteamTimeoutMs = 300000;
 
         private const string SteamUri = "steam://rungameid/779260";
         private const string StoreUrl = "https://store.steampowered.com/app/779260/Kode_Studio/";
@@ -43,6 +43,7 @@ namespace CodingTimeTrackerForSteam.Linux
         private static async Task<int> Main()
         {
             Console.WriteLine("Coding Time Tracker for Steam (Linux)");
+            AutoStartHelper.SetupAutoStart(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
             Console.CancelKeyPress += (s, e) =>
             {
