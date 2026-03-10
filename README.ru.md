@@ -51,7 +51,7 @@
 4. Выполните следующую команду для сборки проекта:
 
     ```bash
-    dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:EnableCompressionInSingleFile=true
+    dotnet publish CodingTimeTrackerForSteam.csproj -c Release -r linux-x64 -o publish
     ```
 
 5. После успешной сборки исполняемый файл будет доступен в папке `bin/Release/netX.X/win-x64/publish/`.
