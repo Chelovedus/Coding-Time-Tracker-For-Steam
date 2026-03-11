@@ -43,7 +43,10 @@ internal class AppController : IDisposable
     private void OnEditorStarted()
     {
         if (!_game.IsRunning())
+        {
             _game.Launch();
+            _game.WaitForLaunch(300_000);
+        }
     }
 
     private void OnEditorStopped()

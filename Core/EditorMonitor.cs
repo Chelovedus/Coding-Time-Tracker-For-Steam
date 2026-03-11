@@ -6,7 +6,7 @@ internal class EditorMonitor : IDisposable
 {
     private static readonly HashSet<string> _editors =
     [
-        "code", "devenv", "idea64", "pycharm64", "rider64", "clion64",
+        "devenv", "idea64", "pycharm64", "rider64", "clion64",
         "phpstorm64", "webstorm64", "studio64", "eclipse", "netbeans64",
         "codeblocks", "qtcreator", "kdevelop", "jdev", "monodevelop",
         "arduino", "sublime_text", "atom", "notepad++", "brackets",

@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using CodingTimeTrackerForSteam.Localization;
 using CodingTimeTrackerForSteam.Platform;
+using System.Runtime.InteropServices;
 
 namespace CodingTimeTrackerForSteam.Steam;
 
@@ -13,7 +14,7 @@ internal class GameManager
     private readonly HashSet<uint>  _gamePids = [];
     private readonly object         _lock     = new();
 
-    private NativeMethods.WinEventDelegate? _winEventProc;
+    private readonly NativeMethods.WinEventDelegate _winEventProc;
     private IntPtr _hookShow;
     private IntPtr _hookFg;
     private System.Threading.Timer? _hideTimer;
@@ -61,6 +62,11 @@ internal class GameManager
 
         lock (_lock)
             _gamePids.Clear();
+    }
+    
+    public GameManager()
+    {
+        _winEventProc = OnWinEvent;
     }
 
     public bool WaitForLaunch(int timeoutMs)
@@ -165,18 +171,25 @@ internal class GameManager
 
     private void InstallEventHook()
     {
-        if (_hookShow != IntPtr.Zero) return;
-
-        _winEventProc = OnWinEvent;
+        if (_hookShow != IntPtr.Zero)
+            return;
 
         _hookShow = NativeMethods.SetWinEventHook(
-            NativeMethods.EVENT_OBJECT_SHOW, NativeMethods.EVENT_OBJECT_SHOW,
-            IntPtr.Zero, _winEventProc, 0, 0,
+            NativeMethods.EVENT_OBJECT_SHOW,
+            NativeMethods.EVENT_OBJECT_SHOW,
+            IntPtr.Zero,
+            _winEventProc,
+            0,
+            0,
             NativeMethods.WINEVENT_OUTOFCONTEXT | NativeMethods.WINEVENT_SKIPOWNPROCESS);
 
         _hookFg = NativeMethods.SetWinEventHook(
-            NativeMethods.EVENT_SYSTEM_FOREGROUND, NativeMethods.EVENT_SYSTEM_FOREGROUND,
-            IntPtr.Zero, _winEventProc, 0, 0,
+            NativeMethods.EVENT_SYSTEM_FOREGROUND,
+            NativeMethods.EVENT_SYSTEM_FOREGROUND,
+            IntPtr.Zero,
+            _winEventProc,
+            0,
+            0,
             NativeMethods.WINEVENT_OUTOFCONTEXT | NativeMethods.WINEVENT_SKIPOWNPROCESS);
 
         Console.WriteLine("WinEvent hooks installed.");
@@ -189,12 +202,13 @@ internal class GameManager
             NativeMethods.UnhookWinEvent(_hookShow);
             _hookShow = IntPtr.Zero;
         }
+
         if (_hookFg != IntPtr.Zero)
         {
             NativeMethods.UnhookWinEvent(_hookFg);
             _hookFg = IntPtr.Zero;
         }
-        _winEventProc = null;
+
         Console.WriteLine("WinEvent hooks removed.");
     }
 
