@@ -21,6 +21,8 @@ internal class EditorMonitor : IDisposable
     public event Action? EditorStarted;
     public event Action? EditorStopped;
 
+    public bool IsEditorRunning() => IsAnyRunning();
+    
     public void Start()
     {
         _editorWasRunning = IsAnyRunning();

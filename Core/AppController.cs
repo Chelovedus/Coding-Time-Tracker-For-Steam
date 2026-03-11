@@ -32,6 +32,12 @@ internal class AppController : IDisposable
         _monitor.EditorStarted += OnEditorStarted;
         _monitor.EditorStopped += OnEditorStopped;
         _monitor.Start();
+
+        if (!_monitor.IsEditorRunning())
+        {
+            Console.WriteLine("No editors running at startup - closing KodeStudio.");
+            _game.Close();
+        }
     }
 
     private void OnEditorStarted()
