@@ -3,7 +3,7 @@
 ; Non-commercial use only
 
 #define MyAppName "Coding Time Tracker for Steam"
-#define MyAppVersion "1.3.0"
+#define MyAppVersion "1.5.0"
 #define MyAppPublisher "Chelovedus"
 #define MyAppURL "https://github.com/Chelovedus/Coding-Time-Tracker-For-Steam"
 #define MyAppExeName "CodingTimeTrackerForSteam.exe"

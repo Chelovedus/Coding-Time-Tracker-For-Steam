@@ -51,6 +51,7 @@
 4. Выполните следующую команду для сборки проекта:
 
     ```bash
+    wsl -d Ubuntu
     dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:EnableCompressionInSingleFile=true
     ```
 
