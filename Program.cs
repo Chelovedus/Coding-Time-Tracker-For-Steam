@@ -26,8 +26,8 @@ namespace CodingTimeTrackerForSteam.Linux
             "eclipse","netbeans","codeblocks","qtcreator","kdevelop",
             "monodevelop","arduino","sublime_text","atom","brackets",
             "geany","kate","gedit","komodo","jedit","spyder","thonny",
-            "rstudio","vim","nvim","emacs","xed","mousepad","pluma",
-            "leafpad","nano","micro"
+            "rstudio","vim","nvim","emacs","mousepad","pluma",
+            "leafpad","micro"
         };
 
         private static CancellationTokenSource _cts = new();
@@ -42,32 +42,37 @@ namespace CodingTimeTrackerForSteam.Linux
 
         private static async Task<int> Main()
         {
-            Console.WriteLine("Coding Time Tracker for Steam (Linux)");
-            AutoStartHelper.SetupAutoStart(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            string home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            string installedBinary = Path.Combine(home, ".local/bin/CodingTimeTrackerForSteam");
 
-            Console.CancelKeyPress += (s, e) =>
+            string current = Environment.ProcessPath;
+
+            if (string.IsNullOrEmpty(current))
+                return 1;
+
+            bool isInstalledLocation = current == installedBinary;
+
+            if (!isInstalledLocation)
             {
-                e.Cancel = true;
-                _cts.Cancel();
-            };
+                InstallBinary();
+                InstallUserService();
+
+                NotifyUser("Coding Time Tracker installed and running in background.");
+
+                return 0;
+            }
+
 
             if (!DetectSteam())
             {
-                Console.WriteLine("Steam installation not found.");
                 NotifyUser("Steam installation not detected.");
                 return 1;
             }
 
-            Console.WriteLine($"Steam detected at: {SteamRoot}");
-
             if (!IsGameInstalled())
             {
-                Console.WriteLine("Kode Studio not installed.");
-
                 NotifyUser("Kode Studio is not installed. Redirecting to store.");
-
                 StartProcessDetached("xdg-open", StoreUrl);
-
                 return 1;
             }
 
@@ -112,6 +117,20 @@ namespace CodingTimeTrackerForSteam.Linux
             }
 
             return false;
+        }
+
+        private static void RunSystemCtl(string args)
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = "systemctl",
+                    Arguments = "--user " + args,
+                    UseShellExecute = true
+                });
+            }
+            catch { }
         }
 
         private static bool IsGameInstalled()
@@ -301,6 +320,63 @@ namespace CodingTimeTrackerForSteam.Linux
             {
                 Console.WriteLine(message);
             }
+        }
+
+        private static void InstallBinary()
+        {
+            string home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+
+            string binDir = Path.Combine(home, ".local/bin");
+            Directory.CreateDirectory(binDir);
+
+            string target = Path.Combine(binDir, "CodingTimeTrackerForSteam");
+
+            string current = Environment.ProcessPath;
+
+            if (string.IsNullOrEmpty(current))
+                return;
+
+            if (current != target)
+            {
+                File.Copy(current, target, true);
+                Process.Start("chmod", $"+x \"{target}\"")?.WaitForExit();
+            }
+        }
+
+        private static void InstallUserService()
+        {
+            string home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+
+            string systemdDir = Path.Combine(home, ".config/systemd/user");
+            Directory.CreateDirectory(systemdDir);
+
+            string servicePath = Path.Combine(systemdDir, "codingtimetracker.service");
+
+            string service = """
+        [Unit]
+        Description=Coding Time Tracker for Steam
+        After=graphical-session.target
+
+        [Service]
+        Type=simple
+        ExecStart=%h/.local/bin/CodingTimeTrackerForSteam
+        Restart=always
+        RestartSec=5
+
+        [Install]
+        WantedBy=graphical-session.target
+        """;
+
+            if (!File.Exists(servicePath))
+                File.WriteAllText(servicePath, service);
+
+            RunSystemCtl("daemon-reload");
+            Thread.Sleep(300);
+
+            RunSystemCtl("enable codingtimetracker.service");
+            Thread.Sleep(300);
+
+            RunSystemCtl("start codingtimetracker.service");
         }
 
         private static void StartProcessDetached(string file, string args)
