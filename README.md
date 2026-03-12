@@ -2,65 +2,276 @@
 
 <p align="center">
 <img src="/Resources/codePreview.png" alt="Logotype" width="10%">
-</div>
+</p>
 
 **Please choose your preferred language (Пожалуйста, выберите предпочитаемый язык):**
 
 - [Прочитать весь этот текст на РУССКОМ языке](README.ru.md)
 - [English text](README.md)
 
-**Coding Time Tracker for Steam** is a program that tracks the time spent programming in popular IDEs like *Visual Studio Code*, *JetBrains*, and others. It automatically records the time and displays it as activity for the game Kode Studio on your **Steam profile**. The program launches Kode Studio when you start your IDE and closes it when you finish, hiding the game window to avoid distractions. With this program, you can easily **track the time spent programming and share it with your friends.**
+---
 
-<img src="/Resources/Preview.gif" alt="Logotype" width="100%">
+## 📌 About
 
-## ✨ Features
+**Coding Time Tracker for Steam** is a program that tracks the time spent programming in popular IDEs like **Visual Studio Code**, **JetBrains IDEs**, and others.
 
-- **Automatic time tracking**: The program records your time spent working in various IDEs and automatically transfers it to **Kode Studio**.
-- **Instant launch of Kode Studio**: When you launch any supported IDE, the program automatically starts **Kode Studio** via Steam, without the need for manual intervention.
-- **Automatic closing of Kode Studio**: Once you close the IDE or code editor, **Kode Studio** automatically shuts down, and the program returns to standby mode.
-- **Hiding the game window**: The **Kode Studio** game window is automatically hidden while you are working in the code editor, so it does not distract you from programming.
-- **Easy access to data**: All the information about the time spent programming is displayed directly on your Steam profile.
-- **Multilingual support**: The program supports multiple languages, including Russian, English, Spanish, German, and others.
-- **Tray management**: Quick access to the project page on GitHub, the developer's page, or the ability to immediately exit the program through the system tray context menu.
-- **Customizable autostart**: During installation, you can opt to enable autostart so you won’t forget to launch it when you start programming.
+The program automatically records your coding time and displays it as activity for the game **Kode Studio** on your **Steam profile**.
 
-## ⚙️ How It Works
+When you start coding:
 
-1. Upon launch, the program checks if **Kode Studio** is installed. If the game is installed, the program closes **Kode Studio** and goes into standby mode.
-2. As soon as the user opens any supported IDE or code editor, the program automatically launches **Kode Studio** in the background.
-3. The time spent programming is displayed on your Steam profile.
-4. If the user closes the IDE or code editor, **Kode Studio** automatically shuts down, and the program returns to standby mode.
+- the program launches **Kode Studio** via Steam
+- Steam counts the playtime
+- the game window stays hidden
+- when coding stops — the game automatically closes
 
-## 🚀 Installation and Launch
+This allows you to **track programming time and share it with friends through Steam**.
 
-1. Ensure that [**Kode Studio**](https://store.steampowered.com/app/779260/) is installed via Steam.
-2. Download and launch **Coding Time Tracker for Steam**. [[Download link]](https://github.com/Chelovedus/Coding-Time-Tracker-For-Steam/releases/download/v.1.2.0/CodingTimeTrackerForSteam_Installer.exe)
-3. Open your IDE and start coding — the program will take care of the rest!
-
-## 🛠️ Technical Details
-
-- **Written in**: C#
-- **Requirements**: .NET is **not required** as it is embedded within the application.
-- **Autostart support**: The program starts automatically when the system boots.
-
-## 🧑‍💻 Building the Project Yourself
-
-1. Download the project files from the [GitHub repository]([https://github.com/](https://github.com/Chelovedus/Coding-Time-Tracker-For-Steam/archive/refs/tags/Release.zip)).
-2. Open your IDE (e.g., **Visual Studio** or **Rider**) and select the downloaded project folder.
-3. Open the terminal or integrated console in your IDE.
-4. Run the following command to build the project:
-
-    ```bash
-    dotnet publish CodingTimeTrackerForSteam.csproj -c Release -r linux-x64 -o publish
-    ```
-
-5. After a successful build, the executable file will be located in the `bin/Release/netX.X/win-x64/publish/` folder.
-
-## 📬 Contact the Developer
-
-- **[Developer's GitHub page](https://github.com/Chelovedus)**
-- **[Developer's Steam page](https://steamcommunity.com/id/superfrost/)**
+<img src="/Resources/Preview.gif" alt="Preview" width="100%">
 
 ---
 
-Don't miss the chance to use **Coding Time Tracker for Steam** for easy and efficient time tracking while coding! 🔥
+# ✨ Features
+
+- **Automatic time tracking**  
+  Tracks your programming time automatically.
+
+- **Steam integration**  
+  Displays coding time as playtime for **Kode Studio**.
+
+- **Automatic launch**  
+  Starts **Kode Studio** when a supported editor is detected.
+
+- **Automatic shutdown**  
+  Closes **Kode Studio** when the editor is closed.
+
+- **Hidden game window**  
+  Prevents the game window from distracting you.
+
+- **IDE detection**  
+  Supports many popular editors and IDEs.
+
+- **Multilingual support**  
+  Supports multiple languages including:
+  - English
+  - Russian
+  - Spanish
+  - German
+
+- **Tray management (Windows)**  
+  Quick access to:
+  - GitHub page
+  - Developer page
+  - Exit option
+
+- **Autostart support**
+
+---
+
+# ⚙️ How It Works
+
+1. The program starts in the background.
+2. It checks whether **Kode Studio** is installed.
+3. When a supported code editor is launched:
+   - the program automatically launches **Kode Studio** via Steam.
+4. Steam counts the playtime.
+5. When the editor is closed:
+   - **Kode Studio** automatically closes.
+6. The program returns to standby mode.
+
+---
+
+# 🚀 Installation and Launch (Windows)
+
+1. Install **Kode Studio** via Steam:
+
+https://store.steampowered.com/app/779260/
+
+2. Download the latest release:
+
+https://github.com/Chelovedus/Coding-Time-Tracker-For-Steam/releases
+
+3. Run the installer:
+
+CodingTimeTrackerForSteam_Installer.exe
+
+4. Start coding — the tracker will handle the rest.
+
+---
+
+# 🐧 Linux Installation
+
+The Linux version installs itself into the user environment and runs as a **systemd user service**.
+
+## Requirements
+
+- Steam for Linux
+- **Kode Studio installed in Steam**
+- Desktop environment with `notify-send`
+- Linux distribution with **systemd**
+
+Supported Steam installations:
+
+~/.local/share/Steam  
+~/.steam/steam  
+~/.var/app/com.valvesoftware.Steam/.local/share/Steam  
+~/snap/steam/current/.local/share/Steam  
+~/Steam  
+
+---
+
+## First Launch
+
+Build or download the Linux binary and run it once:
+
+./CodingTimeTrackerForSteam
+
+During the first launch the program automatically:
+
+1. Installs itself to:
+
+~/.local/bin/CodingTimeTrackerForSteam
+
+2. Creates a **systemd user service**:
+
+~/.config/systemd/user/codingtimetracker.service
+
+3. Enables and starts the service.
+
+After this step the program runs **automatically in the background**.
+
+---
+
+# 🔧 systemd Service Management
+
+Check service status:
+
+systemctl --user status codingtimetracker
+
+Start service:
+
+systemctl --user start codingtimetracker
+
+Stop service:
+
+systemctl --user stop codingtimetracker
+
+Restart service:
+
+systemctl --user restart codingtimetracker
+
+Disable autostart:
+
+systemctl --user disable codingtimetracker
+
+---
+
+# 🧠 Supported Code Editors
+
+The program detects editors by process name.
+
+Supported editors include:
+
+Visual Studio Code  
+IntelliJ IDEA  
+Rider  
+PyCharm  
+CLion  
+WebStorm  
+PHPStorm  
+Eclipse  
+NetBeans  
+Code::Blocks  
+QtCreator  
+KDevelop  
+MonoDevelop  
+Arduino IDE  
+Sublime Text  
+Atom  
+Brackets  
+Geany  
+Kate  
+Gedit  
+Komodo  
+jEdit  
+Spyder  
+Thonny  
+RStudio  
+Vim  
+Neovim  
+Emacs  
+Mousepad  
+Pluma  
+Leafpad  
+Micro  
+
+---
+
+# 🧩 Kode Studio Stub (Linux)
+
+On Linux the tracker replaces the original **Kode Studio binary** with a lightweight stub.
+
+Original file:
+
+steamapps/common/Kode Studio/Linux/kodestudio
+
+Backup created automatically:
+
+kodestudio.original
+
+The stub prevents the game from opening while still allowing **Steam to count playtime**.
+
+---
+
+# 🛠️ Building the Project
+
+## Requirements
+
+Install .NET SDK.
+
+Example (Ubuntu):
+
+sudo apt install dotnet-sdk-8.0
+
+---
+
+## Build Command
+
+dotnet publish CodingTimeTrackerForSteam.csproj -c Release -r linux-x64 --self-contained true -o publish
+
+The compiled binary will be located in:
+
+publish/CodingTimeTrackerForSteam
+
+Run it once to install the service:
+
+./publish/CodingTimeTrackerForSteam
+
+---
+
+# 🧑‍💻 Technical Details
+
+Language  
+C#
+
+Framework  
+.NET (self-contained build)
+
+Process detection  
+Checks running processes every **1 second**
+
+Steam launch method  
+steam://rungameid/779260
+
+---
+
+# 📬 Contact the Developer
+
+GitHub  
+https://github.com/Chelovedus
+
+Steam  
+https://steamcommunity.com/id/superfrost/
+
+---
+
+⭐ If you like the project — consider starring the repository!
